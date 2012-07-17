@@ -1,0 +1,71 @@
+import(methods)
+
+#importFrom(graphics, plot)
+
+exportClasses(CuffSet,
+			CuffData,
+			CuffDist,
+			CuffFeature, 
+			CuffFeatureSet, 
+			CuffGene, 
+			CuffGeneSet
+)
+
+exportMethods(
+			runInfo,
+			annotation,
+			genes,
+			isoforms,
+			TSS,
+			CDS,
+			promoters,
+			splicing,
+			relCDS,
+			fpkm,
+			repFpkm,
+			count,
+			distValues,
+			csDensity,
+			csScatter,
+			csVolcano,
+			csBoxplot,
+			csHeatmap,
+			csCluster,
+			csDendro,
+			MAplot,
+			dispersionPlot,
+			csSpecificity,
+			fpkmMatrix,
+			repFpkmMatrix,
+			countMatrix,
+			diffData,
+			features,
+			featureNames,
+			samples,
+			replicates,
+			expressionPlot,
+			expressionBarplot,
+			getGene,
+			getGenes,
+			getFeatures,
+			getGeneId,
+			getSig,
+			getSigTable,
+			addFeatures,
+			getLevels,
+			getRepLevels,
+			findSimilar
+)
+
+export("readCufflinks",
+		"JSdist",
+		"JSdistVec",
+		"JSdistFromP",
+		"shannon.entropy",
+		"makeprobs",
+		"makeprobsvec",
+		"csClusterPlot"
+		)
+
+#importClassesFrom("Biobase","Versioned")
+#importClassesFrom("Biobase","VersionedBiobase")

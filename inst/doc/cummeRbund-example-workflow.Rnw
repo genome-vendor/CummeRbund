@@ -1,0 +1,201 @@
+%
+%
+%
+%\VignetteIndexEntry{A sample cummeRbund workflow}
+%\VignetteKeywords{cummeRbund,visualization,sequencing,cufflinks,cuffdiff}
+%\VignettePackage{cummeRbund}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\SweaveOpts{prefix.string=graphics/plot}
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage[authoryear,round]{natbib}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=black
+}
+\usepackage{theorem}
+\usepackage{float}
+\usepackage{ifthen}
+\usepackage[OT1]{fontenc}
+
+\newcommand{\R}{{\textsf{R}}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\term}[1]{{\emph{#1}}}
+\newcommand{\Rpackage}[1]{\textsf{#1}}
+\newcommand{\Rfunction}[1]{\texttt{#1}}
+\newcommand{\Robject}[1]{\texttt{#1}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+
+\bibliographystyle{plainnat}
+\title{cummeRbund: Sample Workflow}
+
+\author{Loyal A. Goff, Cole Trapnell}
+\date{}
+
+\title{CummeRbund workflow}
+\author{Loyal A. Goff}
+
+\begin{document}
+
+<<init, echo=FALSE>>=
+options(width=65)
+@ 
+
+\maketitle
+
+This document is a work in progress and will continually be updated as new features or analyses are integrated into the cummeRbund pipeline.
+This guide is being released as is, with the understanding that existing gaps will be completed in due time.  Please bear with us as we work to expand this resource.
+
+\tableofcontents
+
+\section{Overview}
+
+\section{Workflow Summary}
+
+\section{Reading cuffdiff output}
+<<loadLib>>=
+library(cummeRbund)
+@
+<<read>>=
+cuff <- readCufflinks(dir=system.file("extdata", package="cummeRbund"))
+cuff
+@
+This example uses the 'test' dataset that is included in the cummeRbund package. Importantly, if your current working directory contains the output
+from your cuffdiff analysis, simply calling \Rfunction{cuff<-readCufflinks()} will automatically find the default files and begin parsing your data.
+
+\section{Quality Assessment of data}
+
+\subsection{Evaluating model fit}
+<<model_fit_1,include=FALSE>>=
+d<-dispersionPlot(genes(cuff))
+d
+@
+
+<<label=model_fit_1_plot,fig=TRUE,echo=FALSE>>=
+<<model_fit_1>>
+print(d)
+@
+
+\subsection{Identifying outlier replicates}
+<<rep_boxplot_1,include=FALSE>>=
+pBoxRep<-csBoxplot(genes(cuff),replicates=T)
+pBoxRep
+@
+<<rep_dendro_1,include=FALSE>>=
+pDendro<-csDendro(genes(cuff),replicates=T)
+pDendro
+@
+
+<<label=rep_boxplot_1_plot,fig=TRUE,echo=FALSE>>=
+<<rep_boxplot_1>>
+print(pBoxRep)
+@
+
+<<label=rep_dendro_1_plot,fig=TRUE,echo=FALSE>>=
+<<rep_dendro_1>>
+print(pDendro)
+@
+
+\subsection{Determining relationships between conditions}
+<<boxplot_1,include=FALSE>>=
+pBox<-csBoxplot(genes(cuff))
+pBox
+@
+
+<<label=boxplot_1_plot,fig=TRUE,echo=FALSE>>=
+<<boxplot_1>>
+print(pBox)
+@
+
+
+\section{Analysis of differential expression}
+
+\subsection{Identifying differentially expressed genes}
+<<diff_exp_genes_1>>=
+sigGeneIds<-getSig(cuff,alpha=0.05,level="genes")
+head(sigGeneIds)
+length(sigGeneIds)
+@
+
+<<diff_exp_genes_2>>=
+hESCvsFibroblast.sigGeneIds<-getSig(cuff,"hESC","Fibroblasts",alpha=0.05,level="genes")
+head(hESCvsFibroblast.sigGeneIds)
+length(hESCvsFibroblast.sigGeneIds)
+@
+
+
+\subsubsection{Creating significant gene sets}
+<<diff_exp_genes_3>>=
+sigGenes<-getGenes(cuff,sigGeneIds)
+sigGenes
+@
+
+\subsubsection{Visualization of significant gene sets}
+
+\subsection{Identifying differentially expressed features}
+<<diff_exp_feat_1>>=
+sigGeneIds<-getSig(cuff,alpha=0.05,level="isoforms")
+head(sigGeneIds)
+length(sigGeneIds)
+@
+
+
+\subsubsection{Creating significant feature sets}
+
+\subsubsection{Visualization of significant feature sets}
+
+\subsection{Analysis of individual genes}
+
+\subsubsection{Subsetting individual genes}
+
+\subsubsection{Creating a CuffGene object}
+<<ind_gene_1>>=
+Pink1<-getGene(cuff,'PINK1')
+Pink1
+@
+
+\subsubsection{Visualization of individual genes}
+
+\section{Data Exploration}
+
+\subsection{Identifying patterns of gene expression}
+Partitioning around medioids as e.g.
+
+\subsection{Similarity analysis}
+\Rmethod{findSimilar}
+
+\subsection{Specificity analysis}
+\Rmethod{csSpecificity}
+
+\section{Analysis of differential splicing}
+
+\section{Analysis of differential promoter usage}
+
+\section{Linking with additional analyses}
+
+\subsection{Gene Ontology Analysis (clusterProfiler)}
+In this particular example, the reference .gtf file that was used has the official gene symbol (HUGO) stored in the \emph{gene name} attribute field. This value is carried over by cuffdiff
+and cummeRbund into the \emph{gene\_short\_name} field for each feature.  We will exploit this ID and use it to map genes to their \emph{Entrez ID} to be able to use the very nice \Rpackage{clusterProfiler} package.
+
+The first step is to translate
+
+\subsection{Gene Set Enrichment Analysis (Preranked)}
+We will generate .rnk and .gmx files for use in the GSEA Preranked analysis.
+
+\subsection{Principal component analysis}
+
+\section{Visualization Tips/Tricks}
+
+\subsection{Faceting}
+
+
+\section{Session Info}
+
+\end{document}

@@ -1,0 +1,5 @@
+param	value
+cmd_line	cuffdiff -L iPS,hESC,Fibroblasts -p 6 chr1_snippet.gtf -o iPS_hESC_fibro iPS_rep1.bam,iPS_rep2.bam H1_rep1.bam,H1_rep3.bam NHLF_rep1.bam,NHLF_rep2.bam 
+version	1.4.0
+SVN_revision	3285
+boost_version	104900

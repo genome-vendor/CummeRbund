@@ -1,0 +1,7 @@
+file	condition	replicate_num	total_mass	norm_mass	internal_scale	external_scale
+iPS_rep1.bam	iPS	0	173431	706934	0.958068	0.584877
+iPS_rep2.bam	iPS	1	173007	706934	1.03797	0.584877
+H1_rep1.bam	hESC	0	754749	706934	0.989851	1.51306
+H1_rep3.bam	hESC	1	762643	706934	1.01025	1.51306
+NHLF_rep1.bam	Fibroblasts	0	876775	706934	0.840416	1.22324
+NHLF_rep2.bam	Fibroblasts	1	1.41213e+06	706934	1.19847	1.22324

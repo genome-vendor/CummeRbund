@@ -1,0 +1,86 @@
+%
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\SweaveOpts{prefix.string=graphics/plot}
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage[authoryear,round]{natbib}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=black
+}
+\usepackage{theorem}
+\usepackage{float}
+\usepackage{ifthen}
+\usepackage[OT1]{fontenc}
+
+\newcommand{\R}{{\textsf{R}}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\term}[1]{{\emph{#1}}}
+\newcommand{\Rpackage}[1]{\textsf{#1}}
+\newcommand{\Rfunction}[1]{\texttt{#1}}
+\newcommand{\Robject}[1]{\texttt{#1}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+
+\bibliographystyle{plainnat}
+\title{cummeRbund Run Report}
+
+\date{}
+
+\begin{document}
+<<init, echo=FALSE>>=
+options(width=65)
+library(cummeRbund)
+library(xtable)
+cuff<-readCufflinks(dir="../",dbfile="cuffData.db")
+@ 
+
+\maketitle
+
+\tableofcontents
+
+\section{Run Parameters}
+<<>>=
+runInfo(cuff)
+@
+\section{Samples}
+
+\subsection{Condition Information}
+
+\subsection{Replicate Information}
+<<results=tex>>=
+xtable(replicates(cuff),caption="Replicate information")
+@
+
+\section{Gene information}
+
+\section{Model statistics}
+
+
+\section{Differential Expression Analysis}
+
+\section{Condition Specificity}
+
+%Put \subsection loop here for specificity on each condition including top genes?
+
+
+\clearpage
+
+\section{Session info}
+<<label=close_connection,echo=FALSE>>=
+end<-sqliteCloseConnection(cuff@DB)
+@
+
+<<session>>=
+sessionInfo()
+@
+
+\end{document}
