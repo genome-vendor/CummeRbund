@@ -1,0 +1,14 @@
+Source: r-cran-cummerbund
+Section: gnu-r
+Priority: optional
+Maintainer: Loyal A. Goff <lgoff@csail.mit.edu>
+Build-Depends: r-base-dev, r-base-core, debhelper (>> 4.1.0), cdbs, r-cran-rsqlite, r-cran-ggplot2, r-cran-proto, r-cran-reshape2, r-cran-fastcluster
+Homepage: http://compbio.mit.edu/cummeRbund/
+
+Package: r-cran-cummerbund
+Architecture: all
+Maintainer: Loyal A. Goff <lgoff@csail.mit.edu>
+Description: CummeRbund is an R package that is designed to aid and simplify the task of analyzing Cufflinks RNA-Seq output.
+License: Artistic2.0
+Depends: r-base-core, r-cran-rsqlite, r-cran-ggplot2, r-cran-proto, r-cran-reshape2, r-cran-fastcluster
+
